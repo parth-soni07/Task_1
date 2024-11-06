@@ -1,3 +1,32 @@
 service : {
-    "greet": (text) -> (text) query;
+  // Basic Token Initialization
+  "init_token": (text, text, nat64, nat8) -> ();
+  
+  // Basic Token Functions (ICRC-1)
+  "balance_of": (principal) -> (nat64) query;
+  "total_supply": () -> (nat64) query;
+  "symbol": () -> (text) query;
+  "name": () -> (text) query;
+  "decimals": () -> (nat8) query;
+  "transfer": (principal, nat64) -> (variant { Ok: null; Err: text });
+  "whoami": () -> (principal);
+  
+  // Allowance Management (ICRC-2)
+  "approve": (principal, nat64) -> (variant { Ok: null; Err: text });
+  "allowance": (principal, principal) -> (nat64) query;
+  "transfer_from": (principal, principal, nat64) -> (variant { Ok: null; Err: text });
+  "mint" : (principal, nat64) -> (variant { Ok: null; Err: text });
+  "add_minter" : (principal) -> (variant { Ok: null; Err: text });
+  // "get_owner": () -> (variant { Ok: null; Err: text });
+  "burn_cycles" : (nat64) -> ();
+  "burnt_cycles" : () -> (nat64) query;
+  "get_transaction_history": () -> (vec record {
+        from: principal;
+        to: principal;
+        amount: nat64;
+        post_balance_from: nat64;
+        post_balance_to: nat64;
+        cycles_burnt: nat64;
+        reason: text;
+    }) query;
 }
